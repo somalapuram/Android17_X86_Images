@@ -95,6 +95,20 @@ Two things fix it, in order of preference:
 Plugging into a port directly on the machine, rather than through a hub or
 Thunderbolt dock, also helps.
 
+### Guided (recommended)
+
+`flash.sh` in this repository does the same thing with guard rails: it refuses
+any disk carrying `/`, `/boot`, `/boot/efi` or `/home`, makes you retype the
+device path before it writes, verifies the checksum first, and uses the buffered
+write described above.
+
+```bash
+./flash.sh --list          # show candidate disks with model and serial
+./flash.sh /dev/sdX        # write, after confirmation
+```
+
+Run it from the directory holding `android-pc.img.xz`.
+
 ### macOS
 
 ```bash
@@ -212,6 +226,11 @@ The full build system, kernel configuration and device tree live in
 
 ## Licence
 
-AOSP is Apache 2.0. The Linux kernel is GPLv2. Mesa is MIT. This image is built
-from published sources; see the build repository for the exact revisions and the
-patches applied on top.
+The documentation and scripts in this repository are Apache 2.0 — see
+[LICENSE](LICENSE).
+
+The image itself is an aggregate of separately licensed components: AOSP is
+Apache 2.0, the Linux kernel is GPLv2, and Mesa is MIT. It is built from
+published sources; the build repository has the exact revisions and the
+out-of-tree patches applied on top, which is what you need to exercise the
+GPLv2 source rights for the kernel.

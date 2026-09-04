@@ -175,7 +175,9 @@ Verified on real hardware:
   SwiftShader software path (SuperTuxKart, Candela City, 20 s of
   `dumpsys SurfaceFlinger --timestats`: 3.2 fps → 30 fps).
 - **Camera** — preview and video recording, in colour.
-- **Audio output.**
+- **Audio output, and microphone capture.** The mic reads the internal DMIC
+  array; earlier images recorded from the analog jack instead, which on a laptop
+  with nothing plugged in meant silence.
 - **Display, keyboard, trackpad, WiFi, Bluetooth.**
 - **adb over TCP**, on port 5555.
 - **Installing to the internal disk**, then booting from it.
@@ -183,9 +185,6 @@ Verified on real hardware:
 
 ### Known issues
 
-- **Microphone level is low.** Capture was reading the wrong ALSA device
-  entirely (the empty analog jack rather than the internal DMIC array); that is
-  fixed, but recordings still come out around -53 dBFS. Under investigation.
 - **No Google Play Services or Play Store.** This is plain AOSP. F-Droid is
   included instead.
 - **AMD and NVIDIA GPUs render in software.** Only Intel gets the hardware path.

@@ -1,0 +1,5 @@
+# The image itself is published as a GitHub Release asset, not committed:
+# GitHub rejects any file over 100 MB in a push, and a disk image in git
+# history would be downloaded by every clone forever.
+*.img
+*.img.xz

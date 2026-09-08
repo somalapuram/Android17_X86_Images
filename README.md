@@ -143,6 +143,34 @@ Note Windows needs ~14 GiB free to hold the decompressed image if you use Rufus.
 3. Set the USB disk first in the boot order, or use the one-time boot menu
    (often `F12`).
 
+> **If you skip step 2, this is what you get:**
+>
+> ```
+> error: shim_lock protocol not found.
+> error: you need to load the kernel first.
+> ```
+>
+> Nothing in that message mentions Secure Boot, so it is easy to read as a
+> corrupt download or a bad write. It is neither. GRUB's `linux` command is
+> built to verify the kernel through the `shim_lock` protocol, which only
+> Microsoft-signed `shim.efi` provides. This image loads its own standalone
+> GRUB directly as `EFI/BOOT/BOOTX64.EFI` with no shim in the chain, so with
+> Secure Boot on there is nothing to verify against and the kernel is never
+> loaded. The second line is just the fallout from the first.
+>
+> Turn Secure Boot off and boot again. Two things commonly hide the setting:
+> some firmware (HP and Lenovo especially) will not show the toggle until a
+> supervisor or admin password is set, and some offer no toggle at all but a
+> **Boot Mode** choice, where you want plain `UEFI` rather than
+> `UEFI with Secure Boot`. Do not switch to Legacy or CSM — this image is
+> UEFI-only.
+>
+> Signing your way around it would mean a signed shim, a signed GRUB *and* a
+> signed kernel. The kernel here is a custom mainline build, so that means
+> enrolling your own Machine Owner Key and re-signing after every kernel
+> rebuild. Only worth it on a machine that genuinely cannot disable Secure
+> Boot.
+
 You will get a GRUB menu with four entries:
 
 | Entry | What it does |
